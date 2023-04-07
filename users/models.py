@@ -28,7 +28,7 @@ class Audios(models.Model):
     edited = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.name
+        return f'{self.name}'
     
     class Meta:
         ordering = ['name', 'audio']

@@ -14,7 +14,7 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ['username']
 
     def __str__(self) -> str:
-        return self.username
+        return f'{self.username}'
     
     class Meta:
         ordering = ['username']
