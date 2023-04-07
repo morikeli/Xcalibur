@@ -21,7 +21,7 @@ class GenerateAudioFileForm(forms.ModelForm):
 
     title = forms.CharField(
         widget=forms.TextInput(attrs={'type': 'text', 'placeholder': 'What will be the name of your audio file?'}),
-        label='Audio name',
+        label='Name',
         help_text='Name provided will be used as name of the generated audio file, e.g. <b>"my-speech", "project-presentation"</b>'
         )
     description = forms.CharField(
@@ -32,6 +32,7 @@ class GenerateAudioFileForm(forms.ModelForm):
     accent = forms.ChoiceField(
         widget=forms.Select(attrs={'type': 'select'}),
         help_text='Select your preferred accent',
+        label='Language accent',
         choices=SELECT_ACCENT,
         )
     file_type = forms.ChoiceField(widget=forms.Select(attrs={'type': 'select', 'class': 'mb-2'}), choices=SELECT_FILE_TYPE)
