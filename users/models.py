@@ -5,7 +5,7 @@ from django.db import models
 class ChatBot(models.Model):
     id = models.CharField(max_length=20, primary_key=True, unique=True, editable=False)
     name = models.OneToOneField(User, on_delete=models.CASCADE, editable=False)
-    speaker = models.CharField(max_length=7, blank=False, db_column='Voice')   # male voice or female voice
+    speaker = models.CharField(max_length=7, blank=False, db_column='voice')   # male voice or female voice
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
