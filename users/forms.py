@@ -20,21 +20,21 @@ class GenerateAudioFileForm(forms.ModelForm):
     )
 
     title = forms.CharField(
-        widget=forms.TextInput(attrs={'type': 'text', 'placeholder': 'Enter name of your choice ...'}),
+        widget=forms.TextInput(attrs={'type': 'text', 'placeholder': 'What will be the name of your audio file?'}),
         label='Audio name',
-        help_text='Name provided will be used to name the generated audio file, e.g. <b>"my-speech", "project-presentation"</b>'
+        help_text='Name provided will be used as name of the generated audio file, e.g. <b>"my-speech", "project-presentation"</b>'
         )
     description = forms.CharField(
-        widget=forms.Textarea(attrs={'type': 'text', 'class': 'mt-2', 'placeholder': 'Type your text ...'}),
+        widget=forms.Textarea(attrs={'type': 'text', 'placeholder': 'Type your text ...'}),
         label='Text',
         help_text='This text that will be use to generate an audio file',
         )
     accent = forms.ChoiceField(
-        widget=forms.Select(attrs={'type': 'select', 'class': 'mt-2'}),
+        widget=forms.Select(attrs={'type': 'select'}),
         help_text='Select your preferred accent',
         choices=SELECT_ACCENT,
         )
-    file_type = forms.ChoiceField(widget=forms.Select(attrs={'type': 'select', 'class': 'mt-2 mb-2'}), choices=SELECT_FILE_TYPE)
+    file_type = forms.ChoiceField(widget=forms.Select(attrs={'type': 'select', 'class': 'mb-2'}), choices=SELECT_FILE_TYPE)
     
     class Meta:
         model = Audios
