@@ -1,0 +1,187 @@
+{% extends 'users/base.html' %}{% block title %}Landing page{% endblock %}
+{% load static %}{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    {% block content %}
+    <div class="modal fade" id="audio-form" tabindex="-1">
+        <div class="modal-dialog modal-md modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="bi-soundwave" style="color: #2f91db;"></i> Form</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-2">
+                        <div class="col-md-12">
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                {{GenerateAudioFileForm|crispy}}
+                                <div class="d-grid gap-2">
+                                    <button type="submit" class="btn btn-outline-secondary mt-3">Generate audio</button>
+                                </div>
+                            </form>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <p class="text-start text-muted fw-bold">NOTE: You can download the generated audio file.</p>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+    <main>
+        <div id="hero">
+            <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="true">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>                
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="{% static 'img/carousel/footer-bg.png' %}" height="100%" class="bd-placeholder-img w-100" alt="">
+                        <div class="carousel-caption text-start">
+                            <h1>Hello, there!</h1>
+                            <p>
+                                Generate audio from a given text or create an account to explore more features.
+                            </p>
+                            <p><a class="btn btn-lg btn-success" href="#">Sign up today</a></p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'img/carousel/footer-bg.png' %}" height="100%" class="bd-placeholder-img w-100" alt="">
+                        <div class="carousel-caption text-center">
+                            <h1>Speech recognition at your hands</h1>
+                            <p>
+                                Witness the potential of artificial intelligence and speech recognition as they manifest their true power. 
+                            </p>
+                            <p><a class="btn btn-lg btn-outline-secondary text-light" href="/" data-bs-toggle="modal" data-bs-target="#audio-form">View demo</a></p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'img/carousel/footer-bg.png' %}" height="100%" class="bd-placeholder-img w-100" alt="">
+                        <div class="carousel-caption text-end">
+                            <h1>Download your files</h1>
+                            <p>Download your files immediately after translation</p>
+                            <p><a class="btn btn-lg btn-outline-secondary text-light" href="#">View demo</a></p>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="container marketing">            
+            <div class="container px-4 py-5" id="icon-grid">
+                <h2 class="pb-2 border-bottom">Features</h2>
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-5">
+                    <div class="col-lg-4 col-md-4 d-flex align-items-start">
+                        <div>
+                            <i class="bi-mic-fill"></i>
+                        </div>
+                        <div class="px-3">
+                            <h3 class="fw-bold mb-0 fs-4">Text-to-speech</h3>
+                            <p>
+                                Copy and paste a given text or directly type your text of choice to generate an audio version of the
+                                text. Click the <b>"Get started"</b> link at the navigation bar to display a form.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 d-flex align-items-start">
+                        <div>
+                            <i class="bi-music-note-list"></i>
+                        </div>
+                        <div class="px-3">
+                            <h3 class="fw-bold mb-0 fs-4">Lyrics</h3>
+                            <p>
+                                Upload an audio file, document or a text file and get it translated to its text or audio equivalent.
+                                Your are also free to upload your favorite music to get its lyrics.                                
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 d-flex align-items-start">
+                        <i class="bi-person-check-fill"></i>
+                        <div class="px-3">
+                            <h3 class="fw-bold mb-0 fs-4">Recordings</h3>
+                            <p>
+                                Record yourself and generate a translated text. Users with an account can record, review their file history and delete 
+                                their file records.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <hr class="featurette-divider">
+
+            <div class="row featurette">
+                <div class="col-md-7">
+                    <h2 class="featurette-heading fw-normal lh-1">Text to speech capability. <span class="text-body-secondary">It'll blow your mind!</span></h2>
+                    <p class="lead">
+                        Natural language processing (NLP) refers to the branch of artificial intelligence (AI) concerned with giving computers the 
+                        ability to understand and translate text and spoken words in much the same way human beings can. This is mostly based on speech 
+                        recognition capabilty of a given computer. You can use this website to generate audio or text file from a text file, document or
+                        an uploaded audio file.
+                    </p>
+                </div>
+                <div class="col-md-5">
+                    <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" src="{% static 'img/features/features.png' %}" alt="">
+                </div>
+            </div>
+        
+            <hr class="featurette-divider">
+        
+            <div class="row featurette">
+                <div class="col-md-7 order-md-2">
+                    <h2 class="featurette-heading fw-normal lh-1">Oh yeah, it's awesomeee ... ! <span class="text-body-secondary">See for yourself.</span></h2>
+                    <p class="lead">
+                        NLP drives computer programs that translate text from one language to another, respond to spoken commands, and summarize large volumes of
+                        text rapidly even in real time. Uploaded files may be subject to copyright. Do not violate rules and terms and condition of a given file
+                        <p class="small text-danger"><i class="bi-exclamation-triangle-fill text-danger"></i> CAUTION: Before uploading a document or an audio file,
+                            make sure you adhere to its standards and regulations! File or document may be subject to copyright!
+                        </p>
+                    </p>
+                </div>
+                <div class="col-md-5 order-md-1">
+                    <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" src="{% static 'img/features/features-2.png' %}" alt="">
+                </div>
+            </div>
+        
+            <hr class="featurette-divider">
+        
+            <div class="row featurette">
+                <div class="col-md-7">
+                    <h2 class="featurette-heading fw-normal lh-1">Don't be left out. <span class="text-body-secondary">Signup today!</span></h2>
+                    <p class="lead">
+                        Signup today to access more features 😋️ <br>
+                        Click the link below to get started. <br>
+                        <a href="/" class="btn btn-outline-success fw-bold mt-2" data-bs-toggle="modal" data-bs-target="#audio-form">View demo</a>
+                    </p>
+                </div>
+                <div class="col-md-5">
+                    <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" src="{% static 'img/features/features-3.png' %}" alt="">
+                </div>
+            </div>
+            <br>
+            
+        </div>
+    
+    </main>
+    {% endblock %}
+</body>
+</html>
