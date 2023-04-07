@@ -54,7 +54,7 @@ def index_view(request):
                 audio_file = str(settings.MEDIA_ROOT) + '/' + gen_audio
                 response = HttpResponse(open(audio_file, 'rb').read())
                 response['Content-Type'] = 'audio/' + gen_audio[-3:]     # set Content-type to "audio/wav" or "audio/mp3" or "audio/ogg"
-                response['Content-Disposition'] = 'attachment; ' + str(filename={gen_audio})
+                response['Content-Disposition'] = f'attachment; filename={gen_audio}'
                 return response
 
             else:
