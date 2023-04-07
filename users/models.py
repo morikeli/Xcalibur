@@ -23,6 +23,7 @@ class Audios(models.Model):
     title = models.CharField(max_length=50, blank=False)
     description = models.TextField(blank=False)
     audio = models.FileField(upload_to='Audios/', null=False, editable=False)
+    accent = models.CharField(max_length=20, blank=True)
     file_type = models.CharField(max_length=4, blank=False)
     created = models.DateTimeField(auto_now_add=True)
     edited = models.DateTimeField(auto_now=True)
