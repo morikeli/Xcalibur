@@ -1,0 +1,48 @@
+{% extends 'authentication/base.html' %}{% block title %}Signup{% endblock %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    {% block content %}
+    <div class="container accounts-container-signup">
+        <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="pt-4 pb-2">
+                                    <h5 class="card-title text-center fw-bold pb-0 fs-4">Create Account</h5>
+                                </div>
+                                <form action="" method="post" class="p-3">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-12">
+                                            {{SignupForm|crispy}}
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mt-3">
+                                        <button class="btn btn-outline-success w-100" type="submit">Signup</button>
+                                    </div>
+                                    <div class="col-12 mt-3">
+                                        <h6 class="text-center">*By creating an account you agree to our terms and conditions.</h6>
+                                        <hr>
+                                        <p class="small mb-0 text-center">Already have an account? <a href="{% url 'login' %}">Login</a></p>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    {% endblock %}
+</body>
+</html>
