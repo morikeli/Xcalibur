@@ -19,13 +19,13 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav me-auto mb-2 mb-md-0">
                         <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="bi-person-fill-lock"></i> Login</a>
+                            <a class="nav-link" href="{% url 'login' %}"><i class="bi-person-fill-lock"></i> Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href=""><i class="bi-person-fill-add"></i> Sign up</a>
+                            <a class="nav-link" href="{% url 'signup' %}"><i class="bi-person-fill-add"></i> Sign up</a>
                         </li>
                         <li class="nav-item">
-                            <a class="mt-2 ml-3 btn btn-success" aria-current="page" href="/" data-bs-toggle="modal" data-bs-target="#audio-form">
+                            <a class="mt-1 ml-3 btn btn-success" href="/" data-bs-toggle="modal" data-bs-target="#audio-form">
                                 Get started
                             </a>
                         </li>
