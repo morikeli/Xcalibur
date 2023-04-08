@@ -22,11 +22,13 @@ class GenerateAudioFileForm(forms.ModelForm):
     title = forms.CharField(
         widget=forms.TextInput(attrs={'type': 'text', 'placeholder': 'What will be the name of your audio file?'}),
         label='Name',
+        required=True,
         help_text='Name provided will be used as name of the generated audio file, e.g. <b>"my-speech", "project-presentation"</b>'
         )
     description = forms.CharField(
         widget=forms.Textarea(attrs={'type': 'text', 'placeholder': 'Type your text ...'}),
         label='Text',
+        required=True,
         help_text='This text that will be use to generate an audio file',
         )
     accent = forms.ChoiceField(
@@ -41,3 +43,9 @@ class GenerateAudioFileForm(forms.ModelForm):
         model = Audios
         fields = '__all__'
 
+
+class UploadAudioFileForm(forms.ModelForm):
+
+    class Meta:
+        model = Audios
+        fields = []
