@@ -35,7 +35,7 @@ def user_profile_view(request):
         if form.is_valid():
             form.save()
             messages.warning(request, 'You have updated your profile!')
-            return redirect('user_profile')
+            return redirect('profile')
 
     context = {'EditProfileForm': form}
     return render(request, 'authentication/profile.html', context)
