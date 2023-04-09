@@ -4,12 +4,17 @@ from django.http import HttpResponse
 from django.contrib import messages
 from django.conf import settings
 from .forms import GenerateAudioFileForm, UploadAudioFileForm
+from .models import Audios
 from authentication.models import User
 import speech_recognition as sr
 from gtts import gTTS
+import openai as ai
+import environ
 import uuid
 import os
 
+env = environ.Env()
+environ.Env.read_env()
 
 def index_view(request):
     form = GenerateAudioFileForm()
@@ -82,19 +87,41 @@ def homepage_view(request):
         audio_form = UploadAudioFileForm(request.POST, request.FILES)
         if audio_form.is_valid():
             form = audio_form.save(commit=False)
+            form.name = request.user
+            form.save()
 
-            r = sr.Recognizer()
-            file = sr.AudioFile(form.audio)
-            with file as source:
-                audio = r.record(source)
-                r.recognize_google(audio)
+            messages.success(request, 'Form has been submitted successfully!')
 
-                print(f'Audio: {r.recognize_google(audio)}')
+            # Use OpenAI module to translate audio file
+            audio_file = form.audio # get the audio file
+            user = Audios.objects.get(name=request.user, audio=form.audio)   # get user instance with the uploaded audio file
 
-            messages.success(request, 'Form submitted successfuly!')
-            return redirect('homepage')
+            model_id = 'whisper-1'
+            media_file_path = str(settings.MEDIA_ROOT) + '/' + str(user.audio)      # audio file path
+            media_file = open(media_file_path, 'rb')    # open and read the audio file in binary format
+
+            response = ai.Audio.transcribe(api_key=env('API_KEY'), model=model_id, file=media_file)   # transcribe the audio file using Open AI API
+            
+            # save transcribed audio in a text or .srt file
+            file_name = str(request.user) + str(uuid.uuid4()).replace('-', '').upper()[:10] + '.txt'
+            text_file_path = str(settings.MEDIA_ROOT) + '/User-files/' + str(file_name)
+            
+            with open(text_file_path, 'a') as file:
+                print(str(response.text), file=file)
+                file.close()
+
+            response = HttpResponse(open(text_file_path, 'rb').read())
+            response['Content-Type'] = 'text/plain'
+            response['Content-Disposition'] = f'attachment; filename={file_name}'
+            os.remove(text_file_path)       # delete text file
+
+            return response
+
+        
+
+    user_files = Audios.objects.filter(name=request.user).all()
 
 
-    context = {'UploadAudioForm': audio_form}
+    context = {'UploadAudioForm': audio_form, 'files': user_files}
     return render(request, 'users/homepage.html', context)
 
