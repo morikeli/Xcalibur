@@ -11,17 +11,137 @@
     {% block content %}
     <div class="container mt-5">
         <div class="row">
-            <div class="col-md-6 offset-sm-3">
+            <div class="col-md-8">
                 <form action="" method="post" enctype="multipart/form-data" class="card card-body">
                     {% csrf_token %}
+					{% include 'messages.html' %}
+					<h4 class="card-title text-center">Upload audio file</h4>
                     {{UploadAudioForm|crispy}}
                     <div class="d-grid gap-3 mt-3">
                         <button type="submit" class="btn btn-outline-success">Submit</button>
                     </div>
                 </form>
             </div>
+
+            <div class="col-md-4">
+				<div class="card">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-md-12 text-center">
+								<img src="{{ request.user.profile_pic.url }}" class="dp img-fluid rounded-circle" alt="profile-picture">
+								<hr>
+							</div>
+							<div class="col-md-12">
+								<h6 class="text-center text-dark fw-bold">Profile info.</h6>
+								<table class="table table-borderless">
+									<tbody>
+										<tr>
+											<td class="fw-bold">Name</td>
+											<td class="text-end">{{ request.user.username }}</td>
+										</tr>
+										<tr>
+											<td class="fw-bold">Gender</td>
+											<td class="text-end">{{ request.user.gender }}</td>
+										</tr>
+										<tr>
+											<td class="fw-bold">Phone No</td>
+											<td class="text-end">{{ request.user.phone_no }}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="card card-body">
+					<div class="accordion accordion-flush" id="accordionFlushExample">
+						<div class="accordion-item">
+							<h2 class="accordion-header">
+								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+									<i class="music-note"></i>Audio
+								</button>
+							</h2>
+							<div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+								<div class="accordion-body">
+									<ul class="list-group">
+										{% for file in files %}
+										<li class="list-group-item d-flex justify-content-between align-items-start">
+											<div class="ms-2 me-auto">
+												<div>
+													<i class="bi-file-earmark-music-fill"></i>
+													<a class="small text-primary fst-italic text-muted" href="{{ file.audio.url }}">{{ file.audio.url|slice:"14:" }}</a>
+												</div>
+											</div>
+											<a href="{{ file.audio.url }}" download><i class="bi-download"></i></a>
+										</li>
+										{% endfor %}
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="accordion-item">
+							<h2 class="accordion-header">
+								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+									Files
+								</button>
+							</h2>
+							<div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+								<div class="accordion-body">
+									<ul class="list-group">
+										{% for file in files %}
+										<li class="list-group-item d-flex justify-content-between align-items-start">
+											<div class="ms-2 me-auto">
+												<div>
+													<i class="bi-file-earmark-music-fill"></i>
+													<a class="small text-primary fst-italic text-muted" href="{{ file.audio.url }}">{{ file.audio.url|slice:"14:" }}</a>
+												</div>
+											</div>
+											<a href="{{ file.audio.url }}" download><i class="bi-download"></i></a>
+										</li>
+										{% endfor %}
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="accordion-item">
+							<h2 class="accordion-header">
+								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+									Videos
+								</button>
+							</h2>
+							<div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+								<div class="accordion-body">
+									<ul class="list-group">
+										{% for file in files %}
+										<li class="list-group-item d-flex justify-content-between align-items-start">
+											<div class="ms-2 me-auto">
+												<div>
+													<i class="bi-file-earmark-music-fill"></i>
+													<a class="small text-primary fst-italic text-muted" href="{{ file.audio.url }}">{{ file.audio.url|slice:"14:" }}</a>
+												</div>
+											</div>
+											<a href="{{ file.audio.url }}" download><i class="bi-download"></i></a>
+										</li>
+										{% endfor %}
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+            </div>
         </div>
     </div>
+
+	<footer id="footer">
+		<div class="container">
+            <div class="copyright">
+                <strong>&copy; 2023 Xcalibur | ALL RIGHTS RESERVED.</strong>
+            </div>
+		</div>
+	</footer>
     {% endblock %}
 </body>
 </html>
