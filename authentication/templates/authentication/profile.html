@@ -1,0 +1,76 @@
+{% extends 'users/navbar.html' %}{% block title %}Profile{% endblock %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    {% block content %}
+    <style>
+        #footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+    <div class="container profile-container">
+        <div class="row">
+            <div class="col-sm-12">{% include 'messages.html' %}</div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+							<div class="col-md-12 text-center">
+								<img src="{{ request.user.profile_pic.url }}" class="dp img-fluid rounded-circle" alt="profile-picture">
+								<h3 class="text-muted fw-bold mt-2">{{ request.user.username }}</h3>
+                                <hr>
+							</div>
+							<div class="col-md-12">
+								<h6 class="text-center text-dark fw-bold">Profile info.</h6>
+								<table class="table table-borderless">
+									<tbody>
+										<tr>
+											<td class="fw-bold">Name</td>
+											<td class="text-end">{{ request.user.username }}</td>
+										</tr>
+										<tr>
+											<td class="fw-bold">Gender</td>
+											<td class="text-end">{{ request.user.gender }}</td>
+										</tr>
+										<tr>
+											<td class="fw-bold">Phone No</td>
+											<td class="text-end">{{ request.user.phone_no }}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <form action="" method="post" enctype="multipart/form-data" class="card card-body">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="text-center">Update profile Form</h3>
+                            {{EditProfileForm|crispy}}
+                            <hr>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 mt-2">
+                        <button class="btn btn-outline-secondary" type="submit">
+                            Update profile
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>
