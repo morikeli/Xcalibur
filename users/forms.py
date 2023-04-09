@@ -46,15 +46,6 @@ class GenerateAudioFileForm(forms.ModelForm):
 
 
 class UploadAudioFileForm(forms.ModelForm):
-    SELECT_ACCENT = (
-        ('co.uk', '-- Select one option --'),
-        ('com.au', 'English (Australia)'),
-        ('ca', 'English (Canada)'),
-        ('co.in', 'English (India)'),
-        ('ie', 'English (Ireland)'),
-        ('com.uk', 'English (UK)'),
-        ('us', 'English (US)'),
-    )
     SELECT_FILE_TYPE = (
         (None, '-- Select audio format --'),
         ('.mp3', '.mp3'),
@@ -67,12 +58,6 @@ class UploadAudioFileForm(forms.ModelForm):
         label='Name',
         required=True,
         )
-    accent = forms.ChoiceField(
-        widget=forms.Select(attrs={'type': 'select'}),
-        help_text='Select your preferred accent',
-        label='Language accent',
-        choices=SELECT_ACCENT,
-        )
     audio = forms.FileField(
         widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
         help_text='Upload audio files: .mp3, .ogg or .wav only!',
@@ -81,4 +66,4 @@ class UploadAudioFileForm(forms.ModelForm):
     
     class Meta:
         model = Audios
-        fields = ['audio', 'title', 'accent']
+        fields = ['audio', 'title']
