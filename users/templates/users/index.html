@@ -19,7 +19,7 @@
                 <div class="modal-body">
                     <div class="row mb-2">
                         <div class="col-md-12">
-                            <form action="" method="post">
+                            <form action="{% url 'index' %}" method="post">
                                 {% csrf_token %}
                                 {{GenerateAudioFileForm|crispy}}
                                 <div class="d-grid gap-2">
