@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.contrib import messages
 from django.conf import settings
 from .forms import GenerateAudioFileForm, UploadAudioFileForm, UploadVideoFileForm
-from .models import UserFiles
+from .models import AudioFiles, VideoFiles
 from authentication.models import User
 from openai import error
 import speech_recognition as sr
@@ -91,7 +91,7 @@ def homepage_view(request):
 
             # Use OpenAI module to translate audio file
             audio_file = form.audio # get the audio file
-            user = UserFiles.objects.get(name=request.user, audio=audio_file)   # get user instance with the uploaded audio file
+            user = AudioFiles.objects.get(name=request.user, audio=audio_file)   # get user instance with the uploaded audio file
 
             model_id = 'whisper-1'
             audio_file_path = str(settings.MEDIA_ROOT) + '/' + str(user.audio)      # audio file path
@@ -108,7 +108,7 @@ def homepage_view(request):
                 file.close()
 
             response = HttpResponse(open(text_file_path, 'rb').read())
-            response['Content-Type'] = 'text/plain'
+            response['Content-Type'] = 'audio' + file_name[-3:]
             response['Content-Disposition'] = f'attachment; filename={file_name}'
             os.remove(text_file_path)       # delete text file
 
@@ -122,7 +122,7 @@ def homepage_view(request):
             messages.success(request, 'Form submitted successfully!')
 
             video_file = form.video
-            user = UserFiles.objects.get(name=request.user, video=video_file)   # get user instance with the uploaded video file
+            user = VideoFiles.objects.get(name=request.user, video=video_file)   # get user instance with the uploaded video file
             
             model_id = 'whisper-1'
             media_file_path = str(settings.MEDIA_ROOT) + '/' + str(user.video)      # video file path
@@ -151,9 +151,12 @@ def homepage_view(request):
             
         return redirect('homepage')
 
-    user_files = UserFiles.objects.filter(name=request.user).all()
+    user_audio_files = AudioFiles.objects.filter(name=request.user).all()
+    user_video_files = VideoFiles.objects.filter(name=request.user).all()
 
-
-    context = {'UploadAudioForm': audio_form, 'UploadVideoForm': video_form, 'files': user_files}
+    context = {
+        'UploadAudioForm': audio_form, 'UploadVideoForm': video_form, 'audio_files': user_audio_files,
+        'video_files': user_video_files,
+        }
     return render(request, 'users/homepage.html', context)
 

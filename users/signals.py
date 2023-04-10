@@ -1,6 +1,6 @@
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
-from .models import ChatBot, UserFiles
+from .models import ChatBot, AudioFiles, VideoFiles
 import uuid
 
 
@@ -9,7 +9,13 @@ def generate_chatbotID(sender, instance, **kwargs):
     if instance.id == "":
         instance.id = str(uuid.uuid4()).replace('-', '')[:25]
 
-@receiver(pre_save, sender=UserFiles)
-def generate_userfilesID(sender, instance, **kwargs):
+@receiver(pre_save, sender=AudioFiles)
+def generate_audiofilesID(sender, instance, **kwargs):
+    if instance.id == "":
+        instance.id = str(uuid.uuid4()).replace('-', '')[:25]
+
+
+@receiver(pre_save, sender=VideoFiles)
+def generate_videofilesID(sender, instance, **kwargs):
     if instance.id == "":
         instance.id = str(uuid.uuid4()).replace('-', '')[:25]

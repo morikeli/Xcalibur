@@ -10,7 +10,66 @@
 <body>
     {% block content %}
     <div class="container mt-5">
-        <div class="row">	
+        <div class="row">
+			{% for file in files %}
+			<div class="modal fade" id="delete-modal-{{file.audio}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="instructionsLabel" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-scrollable">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title fs-5" id="instructionsLabel">Instructions &lbbrk;Audio form&rbbrk;</h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item">
+									<p class="text-muted text-center">
+										Are you sure you want to delete <b>"{{ file.audio }}"</b>
+									</p>
+								</li>
+							</ul>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal"><i class="bi-x-circle-fill"></i> Cancel</button>
+							<form action="" method="post">
+								
+							</form>
+							<button type="button" class="btn btn-outline-danger btn-sm" data-bs-dismiss="modal">
+								<i class="bi-trash-fill"></i> Delete
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+
+			{% for file in files %}
+			<div class="modal fade" id="delete-modal-{{file.video}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="instructionsLabel" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-scrollable">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title fs-5" id="instructionsLabel">Instructions &lbbrk;Audio form&rbbrk;</h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item">
+									<p class="text-muted text-center">
+										Are you sure you want to delete <b>"{{ file.audio }}"</b>
+									</p>
+								</li>
+							</ul>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal"><i class="bi-x-circle-fill"></i> Cancel</button>
+							<button type="button" class="btn btn-outline-danger btn-sm" data-bs-dismiss="modal">
+								<i class="bi-trash-fill"></i> Delete
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+
 			<div class="modal fade" id="instructions-modal-audio" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="instructionsLabel" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-scrollable">
 					<div class="modal-content">
@@ -163,6 +222,7 @@
 								<div class="accordion-body">
 									<ul class="list-group">
 										{% for file in files %}
+										{% if file.audio != 'None' %}
 										<li class="list-group-item d-flex justify-content-between align-items-start">
 											<div class="ms-2 me-auto">
 												<div>
@@ -171,7 +231,9 @@
 												</div>
 											</div>
 											<a href="{{ file.audio.url }}" download><i class="bi-download"></i></a>
+											<a href="{% url 'homepage' %}" class="text-danger text-end" data-bs-toggle="modal" data-bs-target="#delete-modal-{{file.id}}"><i class="bi-trash-fill"></i></a>
 										</li>
+										{% endif %}
 										{% endfor %}
 									</ul>
 								</div>
@@ -211,15 +273,20 @@
 								<div class="accordion-body">
 									<ul class="list-group">
 										{% for file in files %}
+										{% if file.video != 'None' %}
 										<li class="list-group-item d-flex justify-content-between align-items-start">
 											<div class="ms-2 me-auto">
 												<div>
 													<i class="bi-file-earmark-music-fill"></i>
 													<a class="small text-primary fst-italic text-muted" href="{{ file.videos.url }}">{{ file.video.url|slice:"14:" }}</a>
+													
 												</div>
 											</div>
 											<a href="{{ file.video.url }}" download><i class="bi-download"></i></a>
 										</li>
+										{% endif %}
+											{% empty %}
+											No video(s) available
 										{% endfor %}
 									</ul>
 								</div>

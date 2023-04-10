@@ -1,5 +1,5 @@
 from django.core.validators import FileExtensionValidator
-from .models import UserFiles
+from .models import AudioFiles, VideoFiles
 from django import forms
 
 
@@ -41,7 +41,7 @@ class GenerateAudioFileForm(forms.ModelForm):
     file_type = forms.ChoiceField(widget=forms.Select(attrs={'type': 'select', 'class': 'mb-2'}), choices=SELECT_FILE_TYPE, required=True)
     
     class Meta:
-        model = UserFiles
+        model = AudioFiles
         fields = '__all__'
 
 
@@ -60,7 +60,7 @@ class UploadAudioFileForm(forms.ModelForm):
     )
     
     class Meta:
-        model = UserFiles
+        model = AudioFiles
         fields = ['audio', 'title']
 
 
@@ -92,5 +92,5 @@ class UploadVideoFileForm(forms.ModelForm):
 
 
     class Meta:
-        model = UserFiles
+        model = VideoFiles
         fields = ['video', 'file_type', 'title']
