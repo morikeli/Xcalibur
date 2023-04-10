@@ -11,19 +11,19 @@
     {% block content %}
     <div class="container mt-5">
         <div class="row">
-			{% for file in files %}
-			<div class="modal fade" id="delete-modal-{{file.audio}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="instructionsLabel" aria-hidden="true">
+			{% for file in audio_files %}
+			<div class="modal fade" id="delete-modal-{{file.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="instructionsLabel" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-scrollable">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h1 class="modal-title fs-5" id="instructionsLabel">Instructions &lbbrk;Audio form&rbbrk;</h1>
+							<h1 class="modal-title fs-5" id="instructionsLabel">Delete audio forms</h1>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 						<div class="modal-body">
 							<ul class="list-group list-group-flush">
 								<li class="list-group-item">
 									<p class="text-muted text-center">
-										Are you sure you want to delete <b>"{{ file.audio }}"</b>
+										Are you sure you want to delete <b>"{{ file.audio.url|slice:"14:" }}"</b>
 									</p>
 								</li>
 							</ul>
@@ -31,39 +31,44 @@
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal"><i class="bi-x-circle-fill"></i> Cancel</button>
 							<form action="" method="post">
-								
+								{% csrf_token %}
+								<input type="hidden" name="delete-file" value="{{ file.id }}">
+								<button type="submit" class="btn btn-outline-danger btn-sm" data-bs-dismiss="modal">
+									<i class="bi-trash-fill"></i> Delete
+								</button>
 							</form>
-							<button type="button" class="btn btn-outline-danger btn-sm" data-bs-dismiss="modal">
-								<i class="bi-trash-fill"></i> Delete
-							</button>
 						</div>
 					</div>
 				</div>
 			</div>
 			{% endfor %}
 
-			{% for file in files %}
-			<div class="modal fade" id="delete-modal-{{file.video}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="instructionsLabel" aria-hidden="true">
+			{% for file in video_files %}
+			<div class="modal fade" id="delete-modal-{{file.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="instructionsLabel" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-scrollable">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h1 class="modal-title fs-5" id="instructionsLabel">Instructions &lbbrk;Audio form&rbbrk;</h1>
+							<h1 class="modal-title fs-5" id="instructionsLabel">Delete video(s) form</h1>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 						<div class="modal-body">
 							<ul class="list-group list-group-flush">
 								<li class="list-group-item">
 									<p class="text-muted text-center">
-										Are you sure you want to delete <b>"{{ file.audio }}"</b>
+										Are you sure you want to delete <b>"{{ file.video.url|slice:"14:" }}"</b>
 									</p>
 								</li>
 							</ul>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal"><i class="bi-x-circle-fill"></i> Cancel</button>
-							<button type="button" class="btn btn-outline-danger btn-sm" data-bs-dismiss="modal">
-								<i class="bi-trash-fill"></i> Delete
-							</button>
+							<form action="" method="post">
+								{% csrf_token %}
+								<input type="hidden" name="delete-file" value="{{ file.id }}">
+								<button type="submit" class="btn btn-outline-danger btn-sm" data-bs-dismiss="modal">
+									<i class="bi-trash-fill"></i> Delete
+								</button>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -148,37 +153,44 @@
 				{% include 'messages.html' %}
 				<form action="{% url 'homepage' %}" method="post" enctype="multipart/form-data" class="card card-body">
                     {% csrf_token %}
-					<div class="d-flex justify-content-between align-items-start">
-						<div class="ms-2 me-auto">
-							<h4 class="card-title">Upload audio file</h4>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="d-flex justify-content-between align-items-start">
+								<div class="ms-2 me-auto">
+									<h4 class="card-title">Upload audio file</h4>
+								</div>
+								<a href="{% url 'homepage' %}"  data-bs-toggle="modal" data-bs-target="#instructions-modal-audio">
+									<i class="bi-question-circle-fill" style="font-size: 15px; color: #1a90c7"></i>
+								</a>
+							</div>
+							{{UploadAudioForm|crispy}}
+							<div class="d-grid gap-3 mt-3">
+								<button type="submit" class="btn btn-outline-success">Upload audio</button>
+							</div>
 						</div>
-						<a href="{% url 'homepage' %}"  data-bs-toggle="modal" data-bs-target="#instructions-modal-audio">
-							<i class="bi-question-circle-fill" style="font-size: 15px; color: #1a90c7"></i>
-						</a>
 					</div>
-                    {{UploadAudioForm|crispy}}
-                    <div class="d-grid gap-3 mt-3">
-                        <button type="submit" class="btn btn-outline-success">Upload audio</button>
-                    </div>
                 </form>
 				<hr>
 				<form action="{% url 'homepage' %}" method="post" enctype="multipart/form-data" class="card card-body">
 					{% csrf_token %}
-					<div class="d-flex justify-content-between align-items-start">
-						<div class="ms-2 me-auto">
-							<h4 class="card-title">Upload video file</h4>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="d-flex justify-content-between align-items-start">
+								<div class="ms-2 me-auto">
+									<h4 class="card-title">Upload video file</h4>
+								</div>
+								<a href="{% url 'homepage' %}"  data-bs-toggle="modal" data-bs-target="#instructions-modal-video">
+									<i class="bi-question-circle-fill" style="font-size: 15px; color: #1a90c7"></i>
+								</a>
+							</div>
+							{{ UploadVideoForm|crispy }}
+							<div class="d-grid gap-3 mt-3">
+								<button type="submit" class="btn btn-outline-secondary">Upload video</button>
+							</div>
 						</div>
-						<a href="{% url 'homepage' %}"  data-bs-toggle="modal" data-bs-target="#instructions-modal-video">
-							<i class="bi-question-circle-fill" style="font-size: 15px; color: #1a90c7"></i>
-						</a>
-					</div>
-					{{ UploadVideoForm|crispy }}
-					<div class="d-grid gap-3 mt-3">
-						<button type="submit" class="btn btn-outline-secondary">Upload video</button>
 					</div>
 				</form>
             </div>
-
             <div class="col-md-4">
 				<div class="card">
 					<div class="card-body">
@@ -221,7 +233,7 @@
 							<div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#user-files-accordion">
 								<div class="accordion-body">
 									<ul class="list-group">
-										{% for file in files %}
+										{% for file in audio_files %}
 										{% if file.audio != 'None' %}
 										<li class="list-group-item d-flex justify-content-between align-items-start">
 											<div class="ms-2 me-auto">
@@ -234,30 +246,8 @@
 											<a href="{% url 'homepage' %}" class="text-danger text-end" data-bs-toggle="modal" data-bs-target="#delete-modal-{{file.id}}"><i class="bi-trash-fill"></i></a>
 										</li>
 										{% endif %}
-										{% endfor %}
-									</ul>
-								</div>
-							</div>
-						</div>
-						<div class="accordion-item">
-							<h2 class="accordion-header">
-								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-									Files
-								</button>
-							</h2>
-							<div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#user-files-accordion">
-								<div class="accordion-body">
-									<ul class="list-group">
-										{% for file in files %}
-										<li class="list-group-item d-flex justify-content-between align-items-start">
-											<div class="ms-2 me-auto">
-												<div>
-													<i class="bi-file-earmark-music-fill"></i>
-													<a class="small text-primary fst-italic text-muted" href="{{ file.audio.url }}">{{ file.audio.url|slice:"14:" }}</a>
-												</div>
-											</div>
-											<a href="{{ file.audio.url }}" download><i class="bi-download"></i></a>
-										</li>
+										{% empty %}
+											<p class="small text-muted text-center">No audio file(s) available</p>
 										{% endfor %}
 									</ul>
 								</div>
@@ -272,7 +262,7 @@
 							<div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#user-files-accordion">
 								<div class="accordion-body">
 									<ul class="list-group">
-										{% for file in files %}
+										{% for file in video_files %}
 										{% if file.video != 'None' %}
 										<li class="list-group-item d-flex justify-content-between align-items-start">
 											<div class="ms-2 me-auto">
@@ -285,8 +275,8 @@
 											<a href="{{ file.video.url }}" download><i class="bi-download"></i></a>
 										</li>
 										{% endif %}
-											{% empty %}
-											No video(s) available
+										{% empty %}
+											<p class="small text-muted text-center">No video file(s) available</p>
 										{% endfor %}
 									</ul>
 								</div>
