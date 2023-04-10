@@ -7,7 +7,6 @@ from .forms import GenerateAudioFileForm, UploadAudioFileForm, UploadVideoFileFo
 from .models import AudioFiles, VideoFiles
 from authentication.models import User
 from openai import error
-import speech_recognition as sr
 from gtts import gTTS
 import openai as ai
 import environ
