@@ -63,6 +63,11 @@ class UploadAudioFileForm(forms.ModelForm):
 
 
 class UploadVideoFileForm(forms.ModelForm):
+    SELECT_FILE_TYPE = (
+        (None, '-- Select file format --'),
+        ('.srt', '.srt'),
+        ('.txt', '.txt'),
+    )
     title = forms.CharField(
         widget=forms.TextInput(attrs={'type': 'text', 'placeholder': 'What will be the name of your video file?'}),
         label='Name',
@@ -73,7 +78,9 @@ class UploadVideoFileForm(forms.ModelForm):
         help_text='Upload audio files: <b> .3gp, .mp4, .mkv or .mpeg only!</b>',
         validators=[FileExtensionValidator(['3gp', 'mp4', 'mkv', 'mpeg'])]
     )
+    file_type = forms.ChoiceField(widget=forms.Select(attrs={'type': 'select', 'class': 'mb-2'}), choices=SELECT_FILE_TYPE)
+
 
     class Meta:
         model = UserFiles
-        fields = ['title', 'video']
+        fields = ['title', 'video', 'file_type']
