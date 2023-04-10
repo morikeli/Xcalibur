@@ -38,11 +38,17 @@ class GenerateAudioFileForm(forms.ModelForm):
         label='Language accent',
         choices=SELECT_ACCENT,
         )
-    file_type = forms.ChoiceField(widget=forms.Select(attrs={'type': 'select', 'class': 'mb-2'}), choices=SELECT_FILE_TYPE, required=True)
+    file_type = forms.ChoiceField(
+        widget=forms.Select(attrs={'type': 'select', 'class': 'mb-2'}), 
+        label='File Format',
+        choices=SELECT_FILE_TYPE, 
+        required=True,
+        help_text='In what file format do you want the generated audio to be saved?',
+        )
     
     class Meta:
         model = AudioFiles
-        fields = '__all__'
+        fields = ['title', 'description', 'accent', 'file_type']
 
 
 class UploadAudioFileForm(forms.ModelForm):    
