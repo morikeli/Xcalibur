@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from django.conf import settings
-from .forms import GenerateAudioFileForm, UploadAudioFileForm
+from .forms import GenerateAudioFileForm, UploadAudioFileForm, UploadVideoFileForm
 from .models import UserFiles
 from authentication.models import User
 import speech_recognition as sr
@@ -81,10 +81,13 @@ def index_view(request):
 @login_required(login_url='login')
 @user_passes_test(lambda user: user.is_staff is False and user.is_superuser is False)
 def homepage_view(request):
-    audio_form  = UploadAudioFileForm()    
+    audio_form  = UploadAudioFileForm()
+    video_form = UploadVideoFileForm()
 
     if request.method == 'POST':
         audio_form = UploadAudioFileForm(request.POST, request.FILES)
+        video_form = UploadVideoFileForm(request.POST, request.FILES)
+
         if audio_form.is_valid():
             form = audio_form.save(commit=False)
             form.name = request.user
@@ -94,7 +97,7 @@ def homepage_view(request):
 
             # Use OpenAI module to translate audio file
             audio_file = form.audio # get the audio file
-            user = UserFiles.objects.get(name=request.user, audio=form.audio)   # get user instance with the uploaded audio file
+            user = UserFiles.objects.get(name=request.user, audio=audio_file)   # get user instance with the uploaded audio file
 
             model_id = 'whisper-1'
             media_file_path = str(settings.MEDIA_ROOT) + '/' + str(user.audio)      # audio file path
@@ -116,6 +119,30 @@ def homepage_view(request):
             os.remove(text_file_path)       # delete text file
 
             return response
+        
+        elif video_form.is_valid():
+            form = video_form.save(commit=False)
+            form.name = request.user
+            form.save()
+
+            messages.success(request, 'Form submitted successfully!')
+
+            video_file = form.video
+            user = UserFiles.objects.get(name=request.user, audio=audio_file)   # get user instance with the uploaded video file
+
+            model_id = 'whisper-1'
+            media_file_path = str(settings.MEDIA_ROOT) + '/' + str(user.audio)      # video file path
+            media_file = open(media_file_path, 'rb')    # open and read the video file in binary format
+
+            response = ai.Audio.transcribe(api_key=env('API_KEY'), model=model_id, file=media_file)   # transcribe the video file using Open AI API
+            
+            # save transcribed video in a text or .srt file
+            file_name = str(request.user) + str(uuid.uuid4()).replace('-', '').upper()[:10] + '.txt'
+            text_file_path = str(settings.MEDIA_ROOT) + '/User-files/' + str(file_name)
+            
+            with open(text_file_path, 'a') as file:
+                print(str(response.text), file=file)
+                file.close()
 
         
 
