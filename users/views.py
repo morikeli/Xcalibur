@@ -81,6 +81,21 @@ def homepage_view(request):
     if request.method == 'POST':
         audio_form = UploadAudioFileForm(request.POST, request.FILES)
         video_form = UploadVideoFileForm(request.POST, request.FILES)
+        
+        # code to delete audio or video files
+        delete_request = request.POST.get('delete-file')
+        print(f'delete-request: {delete_request}')
+
+        if AudioFiles.objects.filter(id=delete_request, name=request.user).exists():
+            audio_files_qs = AudioFiles.objects.get(id=delete_request, name=request.user)
+            audio_files_qs.delete()
+            messages.error(request, f'You have deleted file: "{str(audio_files_qs.audio)[7:]}"')
+        
+        elif VideoFiles.objects.filter(id=delete_request, name=request.user).exists():
+            video_files_qs = VideoFiles.objects.get(id=delete_request, name=request.user)
+            video_files_qs.delete()
+            messages.error(request, f'You have deleted file: "{video_files_qs.video[7:]}')
+        
 
         if audio_form.is_valid():
             form = audio_form.save(commit=False)
