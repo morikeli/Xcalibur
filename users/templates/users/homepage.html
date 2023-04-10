@@ -10,17 +10,86 @@
 <body>
     {% block content %}
     <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-8">
-                <form action="" method="post" enctype="multipart/form-data" class="card card-body">
+        <div class="row">	
+			<div class="modal fade" id="instructions-modal-audio" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="instructionsLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title fs-5" id="instructionsLabel">Modal title</h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<ul class="list-group list-group-flush list-group-numbered">
+								<li class="list-group-item">An item</li>
+								<li class="list-group-item">A second item</li>
+								<li class="list-group-item">A third item</li>
+								<li class="list-group-item">A fourth item</li>
+								<li class="list-group-item">And a fifth one</li>
+							</ul>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-outline-primary btn-sm">Understood</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="modal fade" id="instructions-modal-video" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="instructionsLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title fs-5" id="instructionsLabel">Modal title</h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<ul class="list-group list-group-flush list-group-numbered">
+								<li class="list-group-item">An item</li>
+								<li class="list-group-item">A second item</li>
+								<li class="list-group-item">A third item</li>
+								<li class="list-group-item">A fourth item</li>
+								<li class="list-group-item">And a fifth one</li>
+							</ul>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-outline-primary bnt-sm">Understood</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+            <div class="col-md-8">                
+				<form action="{% url 'homepage' %}" method="post" enctype="multipart/form-data" class="card card-body">
                     {% csrf_token %}
 					{% include 'messages.html' %}
-					<h4 class="card-title text-center">Upload audio file</h4>
+					<div class="d-flex justify-content-between align-items-start">
+						<div class="ms-2 me-auto">
+							<h4 class="card-title">Upload audio file</h4>
+						</div>
+						<a href="{% url 'homepage' %}"  data-bs-toggle="modal" data-bs-target="#instructions-modal-audio">
+							<i class="bi-question-circle-fill" style="font-size: 15px; color: #1a90c7"></i>
+						</a>
+					</div>
                     {{UploadAudioForm|crispy}}
                     <div class="d-grid gap-3 mt-3">
-                        <button type="submit" class="btn btn-outline-success">Submit</button>
+                        <button type="submit" class="btn btn-outline-success">Upload audio</button>
                     </div>
                 </form>
+				<hr>
+				<form action="{% url 'homepage' %}" method="post" enctype="multipart/form-data" class="card card-body">
+					{% csrf_token %}
+					<div class="d-flex justify-content-between align-items-start">
+						<div class="ms-2 me-auto">
+							<h4 class="card-title">Upload video file</h4>
+						</div>
+						<a href="{% url 'homepage' %}"  data-bs-toggle="modal" data-bs-target="#instructions-modal-video">
+							<i class="bi-question-circle-fill" style="font-size: 15px; color: #1a90c7"></i>
+						</a>
+					</div>
+					{{ UploadVideoForm|crispy }}
+					<div class="d-grid gap-3 mt-3">
+						<button type="submit" class="btn btn-outline-secondary">Upload video</button>
+					</div>
+				</form>
             </div>
 
             <div class="col-md-4">
