@@ -61,15 +61,8 @@ def index_view(request):
                 response = HttpResponse(open(audio_file, 'rb').read())
                 response['Content-Type'] = 'audio/' + gen_audio[-3:]     # set Content-type to "audio/wav" or "audio/mp3" or "audio/ogg"
                 response['Content-Disposition'] = f'attachment; filename={gen_audio}'
+                os.remove(audio_file)   # delete uploaded audio file
                 return response
-
-            else:
-                new_audio_file.name = request.user
-                gen_audio = str('Anonymous/') + str(new_audio_file.title) + str(new_audio_file.file_type)
-                tts.save(str(settings.MEDIA_ROOT) + '/' + gen_audio)
-
-                new_audio_file.save()
-
 
             messages.success(request, 'Audio file generated successfully')
             return redirect('index')
