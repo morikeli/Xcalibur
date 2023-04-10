@@ -74,11 +74,7 @@ WSGI_APPLICATION = 'src.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env('DB_NAME'),
-        'USER': env('DB_USER'),
-        'PASSWORD': env('DB_PASSWORD'),
-        'HOST': env('DB_HOST'),
-        'PORT': env('DB_PORT')
+        'NAME': BASE_DIR/'db.sqlite3',
     }
 }
 
@@ -128,7 +124,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR/'media/')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'accounts.user'
+AUTH_USER_MODEL = 'authentication.user'
 
 LOGIN_REDIRECT_URL = 'homepage'
 
