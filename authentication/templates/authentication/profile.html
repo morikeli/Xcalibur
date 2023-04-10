@@ -19,55 +19,81 @@
     <div class="container profile-container">
         <div class="row">
             <div class="col-sm-12">{% include 'messages.html' %}</div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
 							<div class="col-md-12 text-center">
 								<img src="{{ request.user.profile_pic.url }}" class="dp img-fluid rounded-circle" alt="profile-picture">
-								<h3 class="text-muted fw-bold mt-2">{{ request.user.username }}</h3>
-                                <hr>
-							</div>
-							<div class="col-md-12">
-								<h6 class="text-center text-dark fw-bold">Profile info.</h6>
-								<table class="table table-borderless">
-									<tbody>
-										<tr>
-											<td class="fw-bold">Name</td>
-											<td class="text-end">{{ request.user.username }}</td>
-										</tr>
-										<tr>
-											<td class="fw-bold">Gender</td>
-											<td class="text-end">{{ request.user.gender }}</td>
-										</tr>
-										<tr>
-											<td class="fw-bold">Phone No</td>
-											<td class="text-end">{{ request.user.phone_no }}</td>
-										</tr>
-									</tbody>
-								</table>
+								<h3 class="text-muted fw-bold mt-2">{{ request.user.username }} | {{ request.user.gender }}</h3>
 							</div>
 						</div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <form action="" method="post" enctype="multipart/form-data" class="card card-body">
-                    {% csrf_token %}
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h3 class="text-center">Update profile Form</h3>
-                            {{EditProfileForm|crispy}}
-                            <hr>
+            
+            <div class="col-md-8">
+                <div class="card card-body">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Profile info.</button>
+                            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Edit profile</button>
+                            <button class="nav-link" id="nav-password-tab" data-bs-toggle="tab" data-bs-target="#nav-password" type="button" role="tab" aria-controls="nav-password" aria-selected="false">Change password</button>
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table table-borderless mt-2">
+                                        <tbody>
+                                            <tr>
+                                                <td class="fw-bold">Name</td>
+                                                <td class="text-end">{{ request.user.username }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">Gender</td>
+                                                <td class="text-end">{{ request.user.gender }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bold">Phone No</td>
+                                                <td class="text-end">{{ request.user.phone_no }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        {{EditProfileForm|crispy}}
+                                        <hr>
+                                    </div>
+                                    <div class="d-grid gap-2 mt-2">
+                                        <button type="submit" class="btn btn-outline-primary">Update profile</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="nav-password" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        {{EditProfileForm|crispy}}
+                                        <hr>
+                                    </div>
+                                    <div class="d-grid gap-2 mt-2">
+                                        <button type="submit" class="btn btn-outline-primary">Update profile</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                    
-                    <div class="d-grid gap-2 mt-2">
-                        <button class="btn btn-outline-secondary" type="submit">
-                            Update profile
-                        </button>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
