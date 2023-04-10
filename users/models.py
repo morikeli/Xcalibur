@@ -17,7 +17,7 @@ class ChatBot(models.Model):
         verbose_name_plural = 'Chat Bot Records'
         
 
-class Audios(models.Model):
+class UserFiles(models.Model):
     id = models.CharField(max_length=25, primary_key=True, unique=True, editable=False)
     name = models.ForeignKey(User, on_delete=models.CASCADE, editable=False)
     title = models.CharField(max_length=50, blank=True)

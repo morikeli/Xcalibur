@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.contrib import messages
 from django.conf import settings
 from .forms import GenerateAudioFileForm, UploadAudioFileForm
-from .models import Audios
+from .models import UserFiles
 from authentication.models import User
 import speech_recognition as sr
 from gtts import gTTS
@@ -94,7 +94,7 @@ def homepage_view(request):
 
             # Use OpenAI module to translate audio file
             audio_file = form.audio # get the audio file
-            user = Audios.objects.get(name=request.user, audio=form.audio)   # get user instance with the uploaded audio file
+            user = UserFiles.objects.get(name=request.user, audio=form.audio)   # get user instance with the uploaded audio file
 
             model_id = 'whisper-1'
             media_file_path = str(settings.MEDIA_ROOT) + '/' + str(user.audio)      # audio file path
@@ -119,7 +119,7 @@ def homepage_view(request):
 
         
 
-    user_files = Audios.objects.filter(name=request.user).all()
+    user_files = UserFiles.objects.filter(name=request.user).all()
 
 
     context = {'UploadAudioForm': audio_form, 'files': user_files}
