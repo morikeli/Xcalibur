@@ -22,8 +22,8 @@ class UserFiles(models.Model):
     name = models.ForeignKey(User, on_delete=models.CASCADE, editable=False)
     title = models.CharField(max_length=50, blank=True)
     description = models.TextField(blank=False)
-    audio = models.FileField(upload_to='Audios/', null=True)
-    video = models.FileField(upload_to='Videos/', null=True)
+    audio = models.FileField(upload_to='Audios/', null=True, default='no-file-available')
+    video = models.FileField(upload_to='Videos/', null=True, default='no-file-available')
     accent = models.CharField(max_length=20, blank=True)
     file_type = models.CharField(max_length=4, blank=True)
     created = models.DateTimeField(auto_now_add=True)
@@ -34,5 +34,5 @@ class UserFiles(models.Model):
     
     class Meta:
         ordering = ['name', 'created']
-        verbose_name_plural = 'Audio Files Records'
+        verbose_name_plural = 'User Files Records'
 
