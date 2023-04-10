@@ -14,7 +14,7 @@ import uuid
 import os
 
 env = environ.Env()
-environ.Env.read_env()
+environ.Env.read_env('.env')
 
 def index_view(request):
     form = GenerateAudioFileForm()
