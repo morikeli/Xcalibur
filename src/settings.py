@@ -1,3 +1,4 @@
+from django.contrib.messages import constants as messages
 from pathlib import Path
 import environ
 
@@ -126,3 +127,7 @@ MEDIA_ROOT = BASE_DIR/'media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = 'homepage'
+
+MESSAGE_TAGS  ={
+    messages.ERROR: 'danger'
+}
