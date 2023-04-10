@@ -100,10 +100,10 @@ def homepage_view(request):
             user = UserFiles.objects.get(name=request.user, audio=audio_file)   # get user instance with the uploaded audio file
 
             model_id = 'whisper-1'
-            media_file_path = str(settings.MEDIA_ROOT) + '/' + str(user.audio)      # audio file path
-            media_file = open(media_file_path, 'rb')    # open and read the audio file in binary format
+            audio_file_path = str(settings.MEDIA_ROOT) + '/' + str(user.audio)      # audio file path
+            saved_audio_file = open(audio_file_path, 'rb')    # open and read the audio file in binary format
 
-            response = ai.Audio.transcribe(api_key=env('API_KEY'), model=model_id, file=media_file)   # transcribe the audio file using Open AI API
+            response = ai.Audio.transcribe(api_key=env('API_KEY'), model=model_id, file=saved_audio_file)   # transcribe the audio file using Open AI API
             
             # save transcribed audio in a text or .srt file
             file_name = str(request.user) + str(uuid.uuid4()).replace('-', '').upper()[:10] + '.txt'
@@ -128,27 +128,32 @@ def homepage_view(request):
             messages.success(request, 'Form submitted successfully!')
 
             video_file = form.video
-            user = UserFiles.objects.get(name=request.user, audio=audio_file)   # get user instance with the uploaded video file
+            user = UserFiles.objects.get(name=request.user, video=video_file)   # get user instance with the uploaded video file
 
             model_id = 'whisper-1'
-            media_file_path = str(settings.MEDIA_ROOT) + '/' + str(user.audio)      # video file path
-            media_file = open(media_file_path, 'rb')    # open and read the video file in binary format
+            media_file_path = str(settings.MEDIA_ROOT) + '/' + str(user.video)      # video file path
+            saved_video_file = open(media_file_path, 'rb')    # open and read the video file in binary format
 
-            response = ai.Audio.transcribe(api_key=env('API_KEY'), model=model_id, file=media_file)   # transcribe the video file using Open AI API
+            response = ai.Audio.translate(api_key=env('API_KEY'), model=model_id, file=saved_video_file)   # transcribe the video file using Open AI API
             
             # save transcribed video in a text or .srt file
-            file_name = str(request.user) + str(uuid.uuid4()).replace('-', '').upper()[:10] + '.txt'
-            text_file_path = str(settings.MEDIA_ROOT) + '/User-files/' + str(file_name)
+            file_name = str(request.user) + str(uuid.uuid4()).replace('-', '').upper()[:10] + form.file_type
+            file_path = str(settings.MEDIA_ROOT) + '/User-files/' + str(file_name)
             
-            with open(text_file_path, 'a') as file:
+            with open(file_path, 'a') as file:
                 print(str(response.text), file=file)
                 file.close()
 
-        
+            response = HttpResponse(open(file_path, 'rb').read())
+            response['Content-Type'] = 'text/plain'
+            response['Content-Disposition'] = f'attachment; filename={file_name}'
+            os.remove(file_path)       # delete generated file
+
+            return response
 
     user_files = UserFiles.objects.filter(name=request.user).all()
 
 
-    context = {'UploadAudioForm': audio_form, 'files': user_files}
+    context = {'UploadAudioForm': audio_form, 'UploadVideoForm': video_form, 'files': user_files}
     return render(request, 'users/homepage.html', context)
 
