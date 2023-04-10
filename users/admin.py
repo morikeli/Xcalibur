@@ -11,7 +11,7 @@ class ChatBotInfoTable(admin.ModelAdmin):
 @admin.register(AudioFiles)
 class AudioFilesRecordsTable(admin.ModelAdmin):
     list_display = ['name', 'title', 'file_type', 'created']
-    readonly_fields = ['title', 'description', 'audio', 'file_type', 'created']
+    readonly_fields = ['title', 'description', 'audio', 'accent', 'file_type', 'created']
 
 
 @admin.register(VideoFiles)
