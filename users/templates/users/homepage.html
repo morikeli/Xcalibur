@@ -12,46 +12,74 @@
     <div class="container mt-5">
         <div class="row">	
 			<div class="modal fade" id="instructions-modal-audio" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="instructionsLabel" aria-hidden="true">
-				<div class="modal-dialog">
+				<div class="modal-dialog modal-dialog-scrollable">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h1 class="modal-title fs-5" id="instructionsLabel">Modal title</h1>
+							<h1 class="modal-title fs-5" id="instructionsLabel">Instructions &lbbrk;Audio form&rbbrk;</h1>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 						<div class="modal-body">
 							<ul class="list-group list-group-flush list-group-numbered">
-								<li class="list-group-item">An item</li>
-								<li class="list-group-item">A second item</li>
-								<li class="list-group-item">A third item</li>
-								<li class="list-group-item">A fourth item</li>
-								<li class="list-group-item">And a fifth one</li>
+								<li class="list-group-item">
+									Upload attach an audio file to the form by clicking or tapping the <b>"Audio*"</b> form field.
+								</li>
+								<li class="list-group-item">
+									If you wish to rename the audio file, enter your name of choice in the <b>"Name*"</b> form field.
+								</li>
+								<li class="list-group-item">
+									Click <b>"Upload audio"</b> to submit the form. Translation may take a few minutes depending on the uploaded audio file size.
+									Please be patient while it's processing.
+								</li>
+								<li class="list-group-item">
+									Once translation is done, the generated text file will automatically be downloaded.
+									Depending on your browser settings, a prompt may appear asking you where to save the generated text file.
+								</li>
+								<li class="list-group-item">
+									Check your Downloads tab in your browser to access the generated text file.
+								</li>
 							</ul>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-outline-primary btn-sm">Understood</button>
+							<button type="button" class="btn btn-outline-primary btn-sm" data-bs-dismiss="modal">Understood</button>
 						</div>
 					</div>
 				</div>
 			</div>
 
 			<div class="modal fade" id="instructions-modal-video" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="instructionsLabel" aria-hidden="true">
-				<div class="modal-dialog">
+				<div class="modal-dialog modal-dialog-scrollable">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h1 class="modal-title fs-5" id="instructionsLabel">Modal title</h1>
+							<h1 class="modal-title fs-5" id="instructionsLabel">Instructions &lbbrk;Video form&rbbrk;</h1>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 						<div class="modal-body">
 							<ul class="list-group list-group-flush list-group-numbered">
-								<li class="list-group-item">An item</li>
-								<li class="list-group-item">A second item</li>
-								<li class="list-group-item">A third item</li>
-								<li class="list-group-item">A fourth item</li>
-								<li class="list-group-item">And a fifth one</li>
+								<li class="list-group-item">
+									To upload a video, attach video file to the form by clicking or tapping the <b>"Video*"</b> form field.
+								</li>
+								<li class="list-group-item">
+									If you wish the translated speech to be downloaded as a text file, select <b>".txt"</b> in the dropdown menu else
+									select <b>".srt"</b>.
+								</li>
+								<li class="list-group-item">
+									If you wish to rename the audio file, enter your name of choice in the <b>"Name*"</b> form field.
+								</li>
+								<li class="list-group-item">
+									Click <b>"Upload video"</b> to submit the form. Translation may take a few minutes depending on the uploaded audio file size.
+									Please be patient while it's processing.
+								</li>
+								<li class="list-group-item">
+									Once translation is done, the generated text file will automatically be downloaded.
+									Depending on your browser settings, a prompt may appear asking you where to save the generated <b>".txt"</b> or <b>".srt"</b> files.
+								</li>
+								<li class="list-group-item">
+									Check your downloads tab in your browser to access the generated text file.
+								</li>
 							</ul>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-outline-primary bnt-sm">Understood</button>
+							<button type="button" class="btn btn-outline-primary bnt-sm" data-bs-dismiss="modal">Understood</button>
 						</div>
 					</div>
 				</div>
