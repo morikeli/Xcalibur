@@ -38,7 +38,7 @@ class GenerateAudioFileForm(forms.ModelForm):
         label='Language accent',
         choices=SELECT_ACCENT,
         )
-    file_type = forms.ChoiceField(widget=forms.Select(attrs={'type': 'select', 'class': 'mb-2'}), choices=SELECT_FILE_TYPE)
+    file_type = forms.ChoiceField(widget=forms.Select(attrs={'type': 'select', 'class': 'mb-2'}), choices=SELECT_FILE_TYPE, required=True)
     
     class Meta:
         model = UserFiles
@@ -54,6 +54,7 @@ class UploadAudioFileForm(forms.ModelForm):
     audio = forms.FileField(
         widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
         help_text='Upload audio files: <b>.mp3, .ogg or .wav only!</b>',
+        required=True,
         validators=[FileExtensionValidator(['mp3', 'ogg', 'wav'])]
     )
     
@@ -76,9 +77,10 @@ class UploadVideoFileForm(forms.ModelForm):
     video = forms.FileField(
         widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
         help_text='Upload audio files: <b> .3gp, .mp4, .mkv or .mpeg only!</b>',
+        required=True,
         validators=[FileExtensionValidator(['3gp', 'mp4', 'mkv', 'mpeg'])]
     )
-    file_type = forms.ChoiceField(widget=forms.Select(attrs={'type': 'select', 'class': 'mb-2'}), choices=SELECT_FILE_TYPE)
+    file_type = forms.ChoiceField(widget=forms.Select(attrs={'type': 'select', 'class': 'mb-2'}), choices=SELECT_FILE_TYPE, required=True)
 
 
     class Meta:
