@@ -83,11 +83,11 @@
                                 {% csrf_token %}
                                 <div class="row">
                                     <div class="col-md-12">
-                                        {{EditProfileForm|crispy}}
+                                        {{ChangePasswordForm|crispy}}
                                         <hr>
                                     </div>
                                     <div class="d-grid gap-2 mt-2">
-                                        <button type="submit" class="btn btn-outline-primary">Update profile</button>
+                                        <button type="submit" class="btn btn-outline-secondary">Change password</button>
                                     </div>
                                 </div>
                             </form>
