@@ -49,7 +49,8 @@ class UploadAudioFileForm(forms.ModelForm):
     title = forms.CharField(
         widget=forms.TextInput(attrs={'type': 'text', 'placeholder': 'What will be the name of your audio file?'}),
         label='Name',
-        required=True,
+        required=False,
+        help_text='Enter your name of choice if you wish to rename the audio file.',
         )
     audio = forms.FileField(
         widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
@@ -72,7 +73,8 @@ class UploadVideoFileForm(forms.ModelForm):
     title = forms.CharField(
         widget=forms.TextInput(attrs={'type': 'text', 'placeholder': 'What will be the name of your video file?'}),
         label='Name',
-        required=True,
+        required=False,
+        help_text='Enter your name of choice if you wish to rename the video file.',
         )
     video = forms.FileField(
         widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
@@ -80,9 +82,15 @@ class UploadVideoFileForm(forms.ModelForm):
         required=True,
         validators=[FileExtensionValidator(['m4a', 'mp4', 'mkv', 'mpga', 'mpeg', 'webm'])]
     )
-    file_type = forms.ChoiceField(widget=forms.Select(attrs={'type': 'select', 'class': 'mb-2'}), choices=SELECT_FILE_TYPE, required=True)
+    file_type = forms.ChoiceField(
+        widget=forms.Select(attrs={'type': 'select', 'class': 'mb-2'}), 
+        label='File Format',
+        choices=SELECT_FILE_TYPE, 
+        required=True,
+        help_text='In what file format do you want the generated file to be saved?',
+        )
 
 
     class Meta:
         model = UserFiles
-        fields = ['title', 'video', 'file_type']
+        fields = ['video', 'file_type', 'title']
