@@ -1,5 +1,5 @@
 from django.core.validators import FileExtensionValidator
-from .models import Audios
+from .models import UserFiles
 from django import forms
 
 
@@ -41,18 +41,11 @@ class GenerateAudioFileForm(forms.ModelForm):
     file_type = forms.ChoiceField(widget=forms.Select(attrs={'type': 'select', 'class': 'mb-2'}), choices=SELECT_FILE_TYPE)
     
     class Meta:
-        model = Audios
+        model = UserFiles
         fields = '__all__'
 
 
-class UploadAudioFileForm(forms.ModelForm):
-    SELECT_FILE_TYPE = (
-        (None, '-- Select audio format --'),
-        ('.mp3', '.mp3'),
-        ('.ogg', '.ogg'),
-        ('.wav', '.wav')
-    )
-    
+class UploadAudioFileForm(forms.ModelForm):    
     title = forms.CharField(
         widget=forms.TextInput(attrs={'type': 'text', 'placeholder': 'What will be the name of your audio file?'}),
         label='Name',
@@ -60,10 +53,27 @@ class UploadAudioFileForm(forms.ModelForm):
         )
     audio = forms.FileField(
         widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
-        help_text='Upload audio files: .mp3, .ogg or .wav only!',
+        help_text='Upload audio files: <b>.mp3, .ogg or .wav only!</b>',
         validators=[FileExtensionValidator(['mp3', 'ogg', 'wav'])]
     )
     
     class Meta:
-        model = Audios
+        model = UserFiles
         fields = ['audio', 'title']
+
+
+class UploadVideoFileForm(forms.ModelForm):
+    title = forms.CharField(
+        widget=forms.TextInput(attrs={'type': 'text', 'placeholder': 'What will be the name of your video file?'}),
+        label='Name',
+        required=True,
+        )
+    audio = forms.FileField(
+        widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
+        help_text='Upload audio files: <b> .3gp, .mp4, .mkv or .mpeg only!</b>',
+        validators=[FileExtensionValidator(['3gp', 'mp4', 'mkv', 'mpeg'])]
+    )
+
+    class Meta:
+        model = UserFiles
+        fields = ['title', 'video']
