@@ -6,6 +6,7 @@ from django.conf import settings
 from .forms import GenerateAudioFileForm, UploadAudioFileForm, UploadVideoFileForm
 from .models import UserFiles
 from authentication.models import User
+from openai import error
 import speech_recognition as sr
 from gtts import gTTS
 import openai as ai
@@ -122,27 +123,33 @@ def homepage_view(request):
 
             video_file = form.video
             user = UserFiles.objects.get(name=request.user, video=video_file)   # get user instance with the uploaded video file
-
+            
             model_id = 'whisper-1'
             media_file_path = str(settings.MEDIA_ROOT) + '/' + str(user.video)      # video file path
             saved_video_file = open(media_file_path, 'rb')    # open and read the video file in binary format
-
-            response = ai.Audio.translate(api_key=env('API_KEY'), model=model_id, file=saved_video_file)   # transcribe the video file using Open AI API
             
-            # save transcribed video in a text or .srt file
-            file_name = str(request.user) + str(uuid.uuid4()).replace('-', '').upper()[:10] + form.file_type
-            file_path = str(settings.MEDIA_ROOT) + '/User-files/' + str(file_name)
+            try:
+                response = ai.Audio.translate(api_key=env('API_KEY'), model=model_id, file=saved_video_file)   # transcribe the video file using Open AI API
+                
+                # save transcribed video in a text or .srt file
+                file_name = str(request.user) + str(uuid.uuid4()).replace('-', '').upper()[:10] + form.file_type
+                file_path = str(settings.MEDIA_ROOT) + '/User-files/' + str(file_name)
+                
+                with open(file_path, 'a') as file:
+                    print(str(response.text), file=file)
+                    file.close()
+
+                response = HttpResponse(open(file_path, 'rb').read())
+                response['Content-Type'] = 'text/plain'
+                response['Content-Disposition'] = f'attachment; filename={file_name}'
+                os.remove(file_path)       # delete generated file
+
+                return response
             
-            with open(file_path, 'a') as file:
-                print(str(response.text), file=file)
-                file.close()
-
-            response = HttpResponse(open(file_path, 'rb').read())
-            response['Content-Type'] = 'text/plain'
-            response['Content-Disposition'] = f'attachment; filename={file_name}'
-            os.remove(file_path)       # delete generated file
-
-            return response
+            except error.APIConnectionError:
+                messages.error(request, "Couldn't process your request! Check your internet connection.")
+            
+        return redirect('homepage')
 
     user_files = UserFiles.objects.filter(name=request.user).all()
 
