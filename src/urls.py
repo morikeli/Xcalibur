@@ -5,7 +5,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 admin.site.site_title = 'Administrator'
-admin.site.site_header = ''
+admin.site.site_header = 'XCalibur'
 admin.site.index_title = 'Welcome back ...'
 
 urlpatterns = [
