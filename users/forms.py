@@ -73,7 +73,7 @@ class UploadVideoFileForm(forms.ModelForm):
         label='Name',
         required=True,
         )
-    audio = forms.FileField(
+    video = forms.FileField(
         widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
         help_text='Upload audio files: <b> .3gp, .mp4, .mkv or .mpeg only!</b>',
         validators=[FileExtensionValidator(['3gp', 'mp4', 'mkv', 'mpeg'])]
