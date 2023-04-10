@@ -33,6 +33,6 @@ class UserFiles(models.Model):
         return f'{self.name}'
     
     class Meta:
-        ordering = ['name', 'audio']
+        ordering = ['name', 'created']
         verbose_name_plural = 'Audio Files Records'
 
