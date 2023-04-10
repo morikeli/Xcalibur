@@ -76,9 +76,9 @@ class UploadVideoFileForm(forms.ModelForm):
         )
     video = forms.FileField(
         widget=forms.FileInput(attrs={'type': 'file', 'class': 'form-control'}),
-        help_text='Upload audio files: <b> .3gp, .mp4, .mkv or .mpeg only!</b>',
+        help_text='Upload audio files: <b>m4a, .mp4, .mkv, .mpga, .mpeg or .webm only!</b>',
         required=True,
-        validators=[FileExtensionValidator(['3gp', 'mp4', 'mkv', 'mpeg'])]
+        validators=[FileExtensionValidator(['m4a', 'mp4', 'mkv', 'mpga', 'mpeg', 'webm'])]
     )
     file_type = forms.ChoiceField(widget=forms.Select(attrs={'type': 'select', 'class': 'mb-2'}), choices=SELECT_FILE_TYPE, required=True)
 
