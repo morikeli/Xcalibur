@@ -38,6 +38,11 @@
     </div> 
 
     <main>
+        <div class="row">
+            <div class="col-md-12">
+                {% include 'messages.html' %}
+            </div>
+        </div>
         <div id="hero">
             <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="true">
                 <div class="carousel-indicators">
@@ -150,7 +155,7 @@
                 <div class="col-md-7 order-md-2">
                     <h2 class="featurette-heading fw-normal lh-1">Oh yeah, it's awesomeee ... ! <span class="text-body-secondary">See for yourself.</span></h2>
                     <p class="lead">
-                        NLP drives computer programs that translate text from one language to another, respond to spoken commands, and summarize large volumes of
+                        Natural Language Processing (NLP) drives computer programs that translate text from one language to another, respond to spoken commands, and summarize large volumes of
                         text rapidly even in real time. Uploaded files may be subject to copyright. Do not violate rules and terms and condition of a given file
                         <p class="small text-danger"><i class="bi-exclamation-triangle-fill text-danger"></i> CAUTION: Before uploading a document or an audio file,
                             make sure you adhere to its standards and regulations! File or document may be subject to copyright!
@@ -180,7 +185,6 @@
             <br>
             
         </div>
-    
     </main>
     {% endblock %}
 </body>
