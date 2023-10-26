@@ -1,7 +1,3 @@
-# db file
-*.sqlite3
-
-
 # environment variables
 *env
 
@@ -10,23 +6,3 @@
 
 # binary files
 *__pycache__
-
-# migrations file
-*migrations
-
-# audio files
-*mp3
-*ogg
-*wav
-
-# video files
-*mp4
-*mkv
-*mpeg
-*3pg
-
-*jpg
-
-# generated .txt, .srt files
-*txt
-*srt
