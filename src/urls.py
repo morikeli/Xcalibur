@@ -12,5 +12,5 @@ urlpatterns = [
     path('accounts/', include('authentication.urls')),
     path('', include('users.urls')),
     path('admin/', admin.site.urls),
-    re_path(r'^files/(?P<path>.*)$',serve,{'document_root':settings.MEDIA_ROOT}),
+    re_path(r'^media/(?P<path>.*)$',serve,{'document_root':settings.MEDIA_ROOT}),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
