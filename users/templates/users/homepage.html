@@ -235,15 +235,18 @@
 									<ul class="list-group">
 										{% for file in audio_files %}
 										{% if file.audio != 'None' %}
-										<li class="list-group-item d-flex justify-content-between align-items-start">
+										<li class="list-group-item d-flex justify-content-between align-items-center">
 											<div class="ms-2 me-auto">
 												<div>
 													<i class="bi-file-earmark-music-fill"></i>
-													<a class="small text-primary fst-italic text-muted" href="{{ file.audio.url }}">{{ file.audio.url|slice:"14:" }}</a>
+													<a class="small text-primary fst-italic text-muted" href="{{ file.audio.url }}">audio-file{{ file.audio.url|slice:"-4::" }}</a>
 												</div>
 											</div>
-											<a href="{{ file.audio.url }}" download><i class="bi-download"></i></a>
-											<a href="{% url 'homepage' %}" class="text-danger text-end" data-bs-toggle="modal" data-bs-target="#delete-modal-{{file.id}}"><i class="bi-trash-fill"></i></a>
+											<div class="btn-group">
+												<a href="{{ file.audio.url }}" class="btn btn-sm btn-outline-primary" download><i class="bi-download"></i></a>
+												<a href="{% url 'homepage' %}" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete-modal-{{file.id}}"><i class="bi-trash-fill"></i></a>
+											</div>
+											
 										</li>
 										{% endif %}
 										{% empty %}
