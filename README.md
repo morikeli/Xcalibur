@@ -1,5 +1,5 @@
-# dj-voice-assistant
-A web based speech recognizer and translator built with Django in addition to other technologies
+# Xcalibur
+**Xcalibur** is a web based speech recognizer and translator built with Django in addition to other technologies.
 
 ### Demo video
 
@@ -8,7 +8,7 @@ https://user-images.githubusercontent.com/78599959/231025157-810b3b51-c0ba-44b9-
 
 ### Website info
 
-#### Users can upload video or audio files that will be translated to their text equivalent. Additionally, users can also type or copy a text and paste it in a text area provided by a form - click "Get started" button to display form. Once the form is submitted, a prompt may appear (depending on the browser configurations) asking the user where to save the generated text, .srt, audio or video file. If a prompt does not appear, the generated file will be downloaded automatically.
+**Xcalibur** allows users to use text-to-speech or speech-to-text capabilities of a trained speech recognition machine learning model. Users can upload audio or video files that will be translated into their text equivalent. They can also type or copy and paste a given text that will be translated into speech. The generated speech will be saved as an audio file and automatically downloaded via a user's browser. 
 
 ### Live website
-##### You can view the website at [here](https://brocode.pythonanywhere.com).
+You can view the website at [here](https://xcalibur-tts.onrender.com/).
