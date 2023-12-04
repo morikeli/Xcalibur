@@ -1,9 +1,8 @@
 # Xcalibur
+![Xcalibur](https://github.com/morikeli/Xcalibur/assets/78599959/129ef7dc-3035-4610-8c77-aacadc7c2c8a)
+
+## What is Xcalibur?
 **Xcalibur** is a web based speech recognizer and translator built with Django in addition to other technologies.
-
-### Demo video
-
-https://user-images.githubusercontent.com/78599959/231025157-810b3b51-c0ba-44b9-9b6f-ea24f102cf98.mp4
 
 
 ### Website info
