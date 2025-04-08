@@ -16,7 +16,7 @@ idna==3.7
 multidict==6.0.4
 openai==0.27.4
 packaging==23.2
-Pillow==10.2.0
+Pillow==10.3.0
 psycopg2-binary==2.9.6
 requests==2.32.2
 sqlparse==0.5.0
