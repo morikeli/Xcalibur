@@ -23,4 +23,4 @@ sqlparse==0.5.0
 tqdm==4.66.3
 urllib3==1.26.19
 whitenoise==6.6.0
-yarl==1.8.2
+yarl
